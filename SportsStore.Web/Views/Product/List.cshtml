@@ -1,0 +1,26 @@
+﻿@model SportsStore.Web.Models.ProductsListViewModel
+
+@{
+    ViewBag.Title = "Products";
+}
+
+@foreach (var product in Model.Products)
+{
+    @Html.Partial("ProductSummary", product)
+}
+
+<div class="pagingButtonsContainer">
+    @for (int i = 1; i <= Model.PagingInfo.TotalPagesCount; i++)   
+    {
+        <div class="pagingButton @(i == Model.PagingInfo.CurrentPage ? "active" : "")" >
+        @Html.RouteLink(i.ToString(), new
+        {
+            controller = "Product",
+            action = "List",
+            category = Model.CurrentCategory,
+            page = i
+        },
+            new {@class = i==Model.PagingInfo.CurrentPage ? "active" : ""})
+        </div>
+    }
+</div>
